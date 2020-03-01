@@ -1,0 +1,87 @@
+{
+	"info": {
+		"_postman_id": "0ee19efe-9ae1-4234-bfbc-e5e020e5b3e3",
+		"name": "Assurity Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Assurity Sample GET Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "37126ddd-4720-45ec-9979-fb0bd193a975",
+						"exec": [
+							"// name validation",
+							"pm.test(\"Verify name is Carbon credits\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.Name).to.eql(\"Carbon credits\");",
+							"});",
+							"",
+							"// CanRelist validation",
+							"pm.test(\"Verify CanRelist is true\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.CanRelist).to.eql(true);",
+							"});",
+							"",
+							"// Promotion description validation",
+							"pm.test(\"Verify if Promotions element with Name as Gallery has a Description that contains the expected text\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    if (pm.expect(_isEqual(jsonData.Promotions, \"Name\" ,\"Gallery\")).to.be.true)",
+							"    {",
+							"        pm.expect(_isContain(jsonData.Promotions, \"Description\" ,\"2x larger image\")).to.be.true;",
+							"    }",
+							"});",
+							"",
+							"// custom function to check key value pair equals a specific value",
+							"function _isEqual(json, keyname, value) {",
+							" return Object.keys(json).some(key => {",
+							"        return typeof json[key] === 'object' ? ",
+							"        _isEqual(json[key], keyname, value) : key === keyname && json[key] === value;",
+							"    });",
+							"}",
+							"",
+							"// custom function to check key value pair contains a specific value",
+							"function _isContain(json, keyname, value) {",
+							" return Object.keys(json).some(key => {",
+							"        return typeof json[key] === 'object' ? ",
+							"        _isContain(json[key], keyname, value) : key === keyname && json[key].includes(value);",
+							"    });",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.tmsandbox.co.nz/v1/Categories/6327/Details.json?catalogue=false",
+					"protocol": "https",
+					"host": [
+						"api",
+						"tmsandbox",
+						"co",
+						"nz"
+					],
+					"path": [
+						"v1",
+						"Categories",
+						"6327",
+						"Details.json"
+					],
+					"query": [
+						{
+							"key": "catalogue",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
